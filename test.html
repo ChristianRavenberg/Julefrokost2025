@@ -26,7 +26,7 @@
     body {
       min-height: 100vh;
       display: flex;
-      align-items: flex-start;         /* så vi kan scrolle */
+      align-items: flex-start;        /* vigtigt for scroll på mobil */
       justify-content: center;
       padding: 16px;
       background:
@@ -34,8 +34,8 @@
       color: var(--ink);
       font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
       position: relative;
-      overflow-x: hidden;              /* behold sneen inde i skærmen */
-      overflow-y: auto;                /* vigtig: scroll på mobil */
+      overflow-x: hidden;             /* sne holdes inde */
+      overflow-y: auto;               /* tillad scroll lodret */
     }
 
     /* Sne-lag */
@@ -72,144 +72,6 @@
       }
     }
 
-    /* Københavner-skyline */
-    .city-silhouette {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 80px;
-      z-index: 0;
-      background:
-        linear-gradient(to top, #020617 0, rgba(2, 6, 23, 0.6) 35%, transparent 100%);
-    }
-
-    .city-buildings {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(#020617 0, #020617 100%);
-      -webkit-mask-image:
-        linear-gradient(to right,
-          transparent 0,
-          black 5%, black 10%,
-          transparent 12%,
-          black 16%, black 23%,
-          transparent 25%,
-          black 30%, black 40%,
-          transparent 42%,
-          black 47%, black 55%,
-          transparent 57%,
-          black 62%, black 70%,
-          transparent 72%,
-          black 78%, black 88%,
-          transparent 90%, transparent 100%);
-      mask-image:
-        linear-gradient(to right,
-          transparent 0,
-          black 5%, black 10%,
-          transparent 12%,
-          black 16%, black 23%,
-          transparent 25%,
-          black 30%, black 40%,
-          transparent 42%,
-          black 47%, black 55%,
-          transparent 57%,
-          black 62%, black 70%,
-          transparent 72%,
-          black 78%, black 88%,
-          transparent 90%, transparent 100%);
-    }
-
-    /* Julemand & kane */
-    .santa {
-      position: fixed;
-      top: 30px;
-      left: -120px;
-      z-index: 2;
-      font-size: 1.6rem;
-      animation: santaRide 22s linear infinite;
-      text-shadow: 0 0 6px rgba(0,0,0,0.8);
-    }
-
-    @keyframes santaRide {
-      0%   { transform: translateX(0); opacity: 0; }
-      10%  { opacity: 1; }
-      90%  { opacity: 1; }
-      100% { transform: translateX(120vw); opacity: 0; }
-    }
-
-    /* Julebryg-dåse ved siden af pergamentet */
-    .beer-can {
-      position: fixed;
-      right: 12px;
-      bottom: 90px;
-      width: 46px;
-      height: 90px;
-      background: linear-gradient(to bottom, #1b1f3b 0, #243b74 45%, #0f172a 100%);
-      border-radius: 10px;
-      box-shadow:
-        0 8px 16px rgba(0,0,0,0.7),
-        0 0 0 2px rgba(255,255,255,0.15);
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position-anchor: auto;
-    }
-
-    .beer-can::before {
-      content: "";
-      position: absolute;
-      top: 4px;
-      left: 7px;
-      right: 7px;
-      height: 8px;
-      border-radius: 6px;
-      background: linear-gradient(to bottom, #e5e7eb, #9ca3af);
-    }
-
-    .beer-can::after {
-      content: "JB";
-      font-family: "Uncial Antiqua", serif;
-      font-size: 0.85rem;
-      color: #fef3c7;
-      text-shadow: 0 0 4px rgba(15,23,42,0.9);
-    }
-
-    /* Gran-guirlande */
-    .garland {
-      position: absolute;
-      left: 50%;
-      top: -12px;
-      transform: translateX(-50%);
-      width: 92%;
-      height: 32px;
-      background:
-        radial-gradient(circle at 10% 60%, #14532d 0, transparent 55%),
-        radial-gradient(circle at 30% 40%, #166534 0, transparent 55%),
-        radial-gradient(circle at 50% 60%, #15803d 0, transparent 55%),
-        radial-gradient(circle at 70% 40%, #166534 0, transparent 55%),
-        radial-gradient(circle at 90% 60%, #14532d 0, transparent 55%);
-      filter: drop-shadow(0 4px 4px rgba(0,0,0,0.4));
-      border-radius: 999px;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    .garland::after {
-      content: "•   •   •   •   •   •   •   •";
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      letter-spacing: 0.8rem;
-      color: #eab308;
-      text-shadow: 0 0 4px rgba(0,0,0,0.7);
-    }
-
     /* Parchment card */
     .scroll-wrapper {
       position: relative;
@@ -222,7 +84,7 @@
     .scroll {
       background: radial-gradient(circle at top, #fff9e8 0, var(--parchment) 40%, var(--parchment-dark) 100%);
       border-radius: 18px;
-      padding: 40px 24px 26px;
+      padding: 30px 24px 26px;
       box-shadow:
         0 25px 60px rgba(0, 0, 0, 0.75),
         0 0 0 1px rgba(0, 0, 0, 0.3),
@@ -289,7 +151,7 @@
       font-size: 1.02rem;
       line-height: 1.5;
       margin-bottom: 8px;
-      text-align: center;
+      text-align: center; /* alt tekst centreret */
     }
 
     p + p {
@@ -346,6 +208,7 @@
       font-weight: 600;
       margin-bottom: 4px;
       color: #3b2a19;
+      text-align: center;
     }
 
     .footer-line {
@@ -387,16 +250,7 @@
 
     @media (max-width: 600px) {
       .scroll {
-        padding: 34px 16px 22px;
-      }
-      .beer-can {
-        right: 6px;
-        bottom: 80px;
-        transform: scale(0.9);
-      }
-      .santa {
-        top: 18px;
-        font-size: 1.3rem;
+        padding: 24px 16px 20px;
       }
     }
   </style>
@@ -405,20 +259,7 @@
   <!-- Sne -->
   <div class="snow-layer" id="snow-layer"></div>
 
-  <!-- Julemand i kane -->
-  <div class="santa">🎅🛷✨</div>
-
-  <!-- Julebryg -->
-  <div class="beer-can"></div>
-
-  <!-- Skyline -->
-  <div class="city-silhouette">
-    <div class="city-buildings"></div>
-  </div>
-
   <div class="scroll-wrapper">
-    <div class="garland"></div>
-
     <div class="scroll">
       <div class="seal"><span>JB</span></div>
 
