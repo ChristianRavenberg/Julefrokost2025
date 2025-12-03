@@ -2,46 +2,263 @@
 <html lang="da">
 <head>
   <meta charset="UTF-8" />
-  <title>Test – Åbnet Julemysterie</title>
+  <title>Broderskabets Julemysterie</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- Gammel / ceremonial font -->
   <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --parchment: #f4e7c6;
+      --parchment-dark: #d7c29a;
+      --ink: #261b0f;
+      --accent: #b71c1c;
+      --gold: #d4af37;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       min-height: 100vh;
       display: flex;
-      align-items: flex-start; /* vigtig: scroll skal virke */
+      align-items: flex-start;         /* så vi kan scrolle */
       justify-content: center;
       padding: 16px;
-      background: radial-gradient(circle at top, #1f2937 0, #020617 55%, #000 100%);
-      color: #261b0f;
-      font-family: "Cormorant Garamond", serif;
+      background:
+        radial-gradient(circle at top, #1f2937 0, #020617 55%, #000 100%);
+      color: var(--ink);
+      font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
       position: relative;
-      overflow-x: hidden;
-      overflow-y: auto; /* FIX: scroll på mobil */
+      overflow-x: hidden;              /* behold sneen inde i skærmen */
+      overflow-y: auto;                /* vigtig: scroll på mobil */
+    }
+
+    /* Sne-lag */
+    .snow-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      font-size: 10px;
+      opacity: 0.7;
+      user-select: none;
+      animation-name: snowfall;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+
+    @keyframes snowfall {
+      0% {
+        transform: translate3d(var(--x-start), -10px, 0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.9;
+      }
+      100% {
+        transform: translate3d(var(--x-end), 110vh, 0);
+        opacity: 0;
+      }
+    }
+
+    /* Københavner-skyline */
+    .city-silhouette {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 80px;
+      z-index: 0;
+      background:
+        linear-gradient(to top, #020617 0, rgba(2, 6, 23, 0.6) 35%, transparent 100%);
+    }
+
+    .city-buildings {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(#020617 0, #020617 100%);
+      -webkit-mask-image:
+        linear-gradient(to right,
+          transparent 0,
+          black 5%, black 10%,
+          transparent 12%,
+          black 16%, black 23%,
+          transparent 25%,
+          black 30%, black 40%,
+          transparent 42%,
+          black 47%, black 55%,
+          transparent 57%,
+          black 62%, black 70%,
+          transparent 72%,
+          black 78%, black 88%,
+          transparent 90%, transparent 100%);
+      mask-image:
+        linear-gradient(to right,
+          transparent 0,
+          black 5%, black 10%,
+          transparent 12%,
+          black 16%, black 23%,
+          transparent 25%,
+          black 30%, black 40%,
+          transparent 42%,
+          black 47%, black 55%,
+          transparent 57%,
+          black 62%, black 70%,
+          transparent 72%,
+          black 78%, black 88%,
+          transparent 90%, transparent 100%);
+    }
+
+    /* Julemand & kane */
+    .santa {
+      position: fixed;
+      top: 30px;
+      left: -120px;
+      z-index: 2;
+      font-size: 1.6rem;
+      animation: santaRide 22s linear infinite;
+      text-shadow: 0 0 6px rgba(0,0,0,0.8);
+    }
+
+    @keyframes santaRide {
+      0%   { transform: translateX(0); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { transform: translateX(120vw); opacity: 0; }
+    }
+
+    /* Julebryg-dåse ved siden af pergamentet */
+    .beer-can {
+      position: fixed;
+      right: 12px;
+      bottom: 90px;
+      width: 46px;
+      height: 90px;
+      background: linear-gradient(to bottom, #1b1f3b 0, #243b74 45%, #0f172a 100%);
+      border-radius: 10px;
+      box-shadow:
+        0 8px 16px rgba(0,0,0,0.7),
+        0 0 0 2px rgba(255,255,255,0.15);
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position-anchor: auto;
+    }
+
+    .beer-can::before {
+      content: "";
+      position: absolute;
+      top: 4px;
+      left: 7px;
+      right: 7px;
+      height: 8px;
+      border-radius: 6px;
+      background: linear-gradient(to bottom, #e5e7eb, #9ca3af);
+    }
+
+    .beer-can::after {
+      content: "JB";
+      font-family: "Uncial Antiqua", serif;
+      font-size: 0.85rem;
+      color: #fef3c7;
+      text-shadow: 0 0 4px rgba(15,23,42,0.9);
+    }
+
+    /* Gran-guirlande */
+    .garland {
+      position: absolute;
+      left: 50%;
+      top: -12px;
+      transform: translateX(-50%);
+      width: 92%;
+      height: 32px;
+      background:
+        radial-gradient(circle at 10% 60%, #14532d 0, transparent 55%),
+        radial-gradient(circle at 30% 40%, #166534 0, transparent 55%),
+        radial-gradient(circle at 50% 60%, #15803d 0, transparent 55%),
+        radial-gradient(circle at 70% 40%, #166534 0, transparent 55%),
+        radial-gradient(circle at 90% 60%, #14532d 0, transparent 55%);
+      filter: drop-shadow(0 4px 4px rgba(0,0,0,0.4));
+      border-radius: 999px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .garland::after {
+      content: "•   •   •   •   •   •   •   •";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      letter-spacing: 0.8rem;
+      color: #eab308;
+      text-shadow: 0 0 4px rgba(0,0,0,0.7);
+    }
+
+    /* Parchment card */
+    .scroll-wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 750px;
+      width: 100%;
+      margin: 32px auto 40px;
     }
 
     .scroll {
-      background: radial-gradient(circle at top, #fff9e8 0, #f4e7c6 40%, #d7c29a 100%);
+      background: radial-gradient(circle at top, #fff9e8 0, var(--parchment) 40%, var(--parchment-dark) 100%);
       border-radius: 18px;
-      padding: 30px 24px 26px;
-      max-width: 750px;
-      width: 100%;
-      margin-top: 30px;
-      margin-bottom: 30px;
+      padding: 40px 24px 26px;
       box-shadow:
         0 25px 60px rgba(0, 0, 0, 0.75),
         0 0 0 1px rgba(0, 0, 0, 0.3),
         inset 0 0 40px rgba(255, 255, 255, 0.4);
       position: relative;
+      border: 1px solid rgba(0,0,0,0.35);
+    }
+
+    /* Rullekanter */
+    .scroll::before,
+    .scroll::after {
+      content: "";
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.22);
+      filter: blur(3px);
+      z-index: -1;
+    }
+
+    .scroll::before {
+      top: -6px;
+    }
+
+    .scroll::after {
+      bottom: -6px;
     }
 
     h1 {
-      font-family: "Uncial Antiqua", serif;
-      font-size: 2.2rem;
+      font-family: "Uncial Antiqua", "Cormorant Garamond", serif;
+      font-size: clamp(1.9rem, 4vw, 2.4rem);
       text-align: center;
       letter-spacing: 0.05em;
+      color: var(--ink);
       text-shadow:
         0 0 4px rgba(255, 255, 255, 0.6),
         0 0 10px rgba(0, 0, 0, 0.5);
@@ -50,84 +267,332 @@
 
     .subtitle {
       font-style: italic;
-      font-size: 1rem;
+      font-size: 0.95rem;
       text-align: center;
       margin-bottom: 18px;
+      color: #473624;
+    }
+
+    .section {
+      margin-top: 18px;
+    }
+
+    .section-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+      color: #3b2a19;
+      text-align: center;
     }
 
     p {
-      text-align: center;
-      font-size: 1.1rem;
+      font-size: 1.02rem;
       line-height: 1.5;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+      text-align: center;
     }
 
+    p + p {
+      margin-top: 4px;
+    }
+
+    .small-note {
+      font-size: 0.9rem;
+      opacity: 0.75;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    /* Countdown */
+    .countdown-label {
+      font-weight: 600;
+      text-align: center;
+      margin-top: 6px;
+      margin-bottom: 6px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      color: #5c3a2b;
+    }
+
+    #countdown {
+      font-family: "Uncial Antiqua", "Cormorant Garamond", serif;
+      font-size: clamp(1.45rem, 4.5vw, 1.9rem);
+      text-align: center;
+      margin-bottom: 14px;
+      color: var(--accent);
+      text-shadow:
+        0 0 4px rgba(255, 255, 255, 0.6),
+        0 0 6px rgba(0, 0, 0, 0.6);
+    }
+
+    .muted {
+      opacity: 0.9;
+      font-size: 0.96rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Transport-liste */
     .origin-block {
-      margin-top: 12px;
-      padding-top: 10px;
+      margin-top: 10px;
+      padding-top: 8px;
       border-top: 1px solid rgba(70, 52, 31, 0.35);
     }
 
-    .highlight {
-      font-weight: 700;
-      color: #b71c1c;
+    .origin-name {
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #3b2a19;
     }
 
     .footer-line {
-      margin-top: 20px;
+      margin-top: 16px;
       padding-top: 10px;
-      border-top: 1px dashed rgba(70, 52, 31, 0.5);
+      border-top: 1px dashed rgba(70, 52, 31, 0.6);
       text-align: center;
+    }
+
+    .highlight {
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* Lille “segl” øverst */
+    .seal {
+      position: absolute;
+      top: -14px;
+      right: 20px;
+      width: 42px;
+      height: 42px;
+      background: radial-gradient(circle at 30% 30%, #ffebee 0, #e53935 30%, #7f1313 100%);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 2px rgba(255, 255, 255, 0.7),
+        0 8px 16px rgba(0, 0, 0, 0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Uncial Antiqua", serif;
+      font-size: 0.9rem;
+      color: #ffe8d7;
+      transform: rotate(-6deg);
+    }
+
+    .seal span {
+      transform: rotate(6deg);
+    }
+
+    @media (max-width: 600px) {
+      .scroll {
+        padding: 34px 16px 22px;
+      }
+      .beer-can {
+        right: 6px;
+        bottom: 80px;
+        transform: scale(0.9);
+      }
+      .santa {
+        top: 18px;
+        font-size: 1.3rem;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Sne -->
+  <div class="snow-layer" id="snow-layer"></div>
 
-  <div class="scroll">
-    <h1>FØRSTE FÆRD</h1>
-    <div class="subtitle">Som broderskabet foreskriver</div>
+  <!-- Julemand i kane -->
+  <div class="santa">🎅🛷✨</div>
 
-    <p>
-      Tiden er inde, seglet er brudt, og din første færd er nu åbenbaret.
-      Broderskabet kalder dig mod byens hjerte – og du skal komme uden tøven og uden forsinkelse.
-    </p>
+  <!-- Julebryg -->
+  <div class="beer-can"></div>
 
-    <p class="highlight">
-      MØDESTED: Under uret på Københavns Hovedbanegård kl. 10:15  
-    </p>
-    <p>(ikke et sekund for sent)</p>
+  <!-- Skyline -->
+  <div class="city-silhouette">
+    <div class="city-buildings"></div>
+  </div>
 
-    <div class="origin-block">
-      <p><strong>Kommer du fra Rødovre</strong></p>
-      <p>Tag bus 200S til Husum St.</p>
-      <p>Skift til toget mod København H — vær under uret 10:15.</p>
-    </div>
+  <div class="scroll-wrapper">
+    <div class="garland"></div>
 
-    <div class="origin-block">
-      <p><strong>Kommer du fra Nørrebro</strong></p>
-      <p>Tag metro M3 fra Nuuks Plads til København H.</p>
-      <p>Mød under uret 10:15. Ingen forsinkelser.</p>
-    </div>
+    <div class="scroll">
+      <div class="seal"><span>JB</span></div>
 
-    <div class="origin-block">
-      <p><strong>Kommer du fra Frederiksberg</strong></p>
-      <p>Gå til Axel Møllers Have og tag metro M3 mod København H.</p>
-      <p>Mød under uret 10:15.</p>
-    </div>
+      <!-- LÅST VISNING -->
+      <div id="locked">
+        <h1>BRODERSKABETS JULEMYSTERIE</h1>
+        <div class="subtitle">Til de indviede og de rettidige</div>
 
-    <div class="origin-block">
-      <p><strong>Kommer du fra Greve</strong></p>
-      <p>Rejs direkte til København H.</p>
-      <p>Mød under uret 10:15 som en sand broder.</p>
-    </div>
+        <div class="countdown-label">Tid til åbenbaringen</div>
+        <div id="countdown">Beregn nedtælling…</div>
 
-    <div class="footer-line">
-      <p>
-        Når uret slår, og brødrene står samlet, fortsætter julemysteriet.<br>
-        Vær klar. Vær præcis. Vær bror.
-      </p>
+        <div class="section">
+          <p>
+            Når morgengryet har rundet sin ottende time lørdag d. 6. december anno 2025, vil dette skrift åbnes, og din første færd vil blive dig åbenbaret.
+          </p>
+          <p>
+            Indtil da forbliver vejen skjult for alle, der kommer for tidligt – eller for sent.
+          </p>
+          <p>
+            Bliv ved ro, hold sindet skarpt og vær rede, når nedtællingen når sin ende.
+          </p>
+        </div>
+
+        <div class="small-note">
+          Vogt dette link som en nøgle; kun de rettidige og loyale vil finde vej.
+        </div>
+      </div>
+
+      <!-- ÅBNET VISNING -->
+      <div id="unlocked" class="hidden">
+        <h1>FØRSTE FÆRD</h1>
+        <div class="subtitle">Som broderskabet foreskriver</div>
+
+        <div class="section">
+          <p>
+            Tiden er inde, seglet er brudt, og din første færd er nu åbenbaret.
+            Broderskabet kalder dig mod byens hjerte – og du skal komme uden tøven og uden forsinkelse.
+          </p>
+        </div>
+
+        <div class="section">
+          <p class="section-title">Mødetid og sted for alle brødre</p>
+          <p>
+            Du skal være under uret på <span class="highlight">Københavns Hovedbanegård</span> kl. <span class="highlight">10:15</span> – ikke et sekund for sent, ingen forsinkelser tolereres.
+          </p>
+          <p class="muted">
+            Din vej dertil er som følger:
+          </p>
+
+          <div class="origin-block">
+            <p class="origin-name">Kommer du fra Rødovre</p>
+            <p>
+              Kommer du fra <strong>Rødovre</strong>, skal du tage <strong>bus 200S</strong> til <strong>Husum St.</strong>
+            </p>
+            <p>
+              Herfra tager du toget mod <strong>København H (Hovedbanegården)</strong> og møder ind <strong>under uret kl. 10:15</strong> – ikke et sekund for sent.
+            </p>
+          </div>
+
+          <div class="origin-block">
+            <p class="origin-name">Kommer du fra Nørrebro</p>
+            <p>
+              Kommer du fra <strong>Nørrebro</strong>, skal du tage <strong>metro M3</strong> fra <strong>Nuuks Plads</strong> til <strong>København H (Hovedbanegården)</strong>.
+            </p>
+            <p>
+              Du skal stå <strong>under uret kl. 10:15</strong> – ingen forsinkelser.
+            </p>
+          </div>
+
+          <div class="origin-block">
+            <p class="origin-name">Kommer du fra Frederiksberg</p>
+            <p>
+              Kommer du fra <strong>Frederiksberg</strong>, skal du gå til <strong>metrostationen Axel Møllers Have</strong> og tage <strong>M3</strong> mod <strong>København H (Hovedbanegården)</strong>.
+            </p>
+            <p>
+              Her skal du ligeledes stå <strong>under uret kl. 10:15</strong> – uden forsinkelse.
+            </p>
+          </div>
+
+          <div class="origin-block">
+            <p class="origin-name">Kommer du fra Greve</p>
+            <p>
+              Kommer du fra <strong>Greve</strong>, skal du rejse direkte til <strong>København H (Hovedbanegården)</strong> og møde ind <strong>under uret kl. 10:15</strong> – i rette tid, som en sand broder.
+            </p>
+          </div>
+        </div>
+
+        <div class="footer-line">
+          <p>
+            Når uret slår, og brødrene står samlet, fortsætter julemysteriet.<br/>
+            Vær klar. Vær præcis. Vær bror.
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 
+  <script>
+    // ====== Tidslås - sæt tidspunkt HER ======
+    // Din tid: 6. december 2025 kl. 08:00 lokal tid
+    const unlockTime = new Date("2025-12-06T08:00:00");
+
+    const lockedEl = document.getElementById("locked");
+    const unlockedEl = document.getElementById("unlocked");
+    const countdownEl = document.getElementById("countdown");
+
+    function formatTimeLeft(ms) {
+      if (ms <= 0) return "0 sekunder";
+
+      const totalSeconds = Math.floor(ms / 1000);
+      const days = Math.floor(totalSeconds / (3600 * 24));
+      const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      const parts = [];
+      if (days) parts.push(days + " d");
+      parts.push(hours.toString().padStart(2, "0") + " t");
+      parts.push(minutes.toString().padStart(2, "0") + " m");
+      parts.push(seconds.toString().padStart(2, "0") + " s");
+
+      return parts.join(" : ");
+    }
+
+    function updateView() {
+      const now = new Date();
+      const diff = unlockTime - now;
+
+      if (diff <= 0) {
+        // Lås op
+        lockedEl.classList.add("hidden");
+        unlockedEl.classList.remove("hidden");
+      } else {
+        // Stadig låst
+        lockedEl.classList.remove("hidden");
+        unlockedEl.classList.add("hidden");
+        if (countdownEl) {
+          countdownEl.textContent = formatTimeLeft(diff);
+        }
+      }
+    }
+
+    updateView();
+    setInterval(updateView, 1000);
+
+    // ====== Sne-effekt ======
+    const snowLayer = document.getElementById("snow-layer");
+    const SNOWFLAKE_COUNT = 60;
+
+    function createSnowflake() {
+      const flake = document.createElement("div");
+      flake.className = "snowflake";
+      flake.textContent = "❄";
+
+      const startX = Math.random() * 100;
+      const endX = startX + (Math.random() * 20 - 10);
+
+      const duration = 10 + Math.random() * 10;  // 10–20 sekunder
+      const delay = Math.random() * 10;          // 0–10 sekunders delay
+
+      flake.style.setProperty("--x-start", startX + "vw");
+      flake.style.setProperty("--x-end", endX + "vw");
+      flake.style.left = startX + "vw";
+      flake.style.animationDuration = duration + "s";
+      flake.style.animationDelay = delay + "s";
+      flake.style.fontSize = (8 + Math.random() * 10) + "px";
+      flake.style.opacity = (0.4 + Math.random() * 0.6).toString();
+
+      snowLayer.appendChild(flake);
+    }
+
+    for (let i = 0; i < SNOWFLAKE_COUNT; i++) {
+      createSnowflake();
+    }
+  </script>
 </body>
 </html>
