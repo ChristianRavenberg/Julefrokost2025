@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8" />
+  <title>Test – Åbnet Julemysterie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: radial-gradient(circle at top, #1f2937 0, #020617 55%, #000 100%);
+      color: #261b0f;
+      font-family: "Cormorant Garamond", serif;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll {
+      background: radial-gradient(circle at top, #fff9e8 0, #f4e7c6 40%, #d7c29a 100%);
+      border-radius: 18px;
+      padding: 30px 24px 26px;
+      max-width: 750px;
+      width: 100%;
+      box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.75),
+        0 0 0 1px rgba(0, 0, 0, 0.3),
+        inset 0 0 40px rgba(255, 255, 255, 0.4);
+      position: relative;
+    }
+
+    h1 {
+      font-family: "Uncial Antiqua", serif;
+      font-size: 2.2rem;
+      text-align: center;
+      letter-spacing: 0.05em;
+      text-shadow: 0 0 4px rgba(255, 255, 255, 0.6),
+                   0 0 10px rgba(0, 0, 0, 0.5);
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-style: italic;
+      font-size: 1rem;
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    p {
+      text-align: center;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .origin-block {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(70, 52, 31, 0.35);
+    }
+
+    .highlight {
+      font-weight: 700;
+      color: #b71c1c;
+    }
+
+    .footer-line {
+      margin-top: 20px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(70, 52, 31, 0.5);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="scroll">
+    <h1>FØRSTE FÆRD</h1>
+    <div class="subtitle">Som broderskabet foreskriver</div>
+
+    <p>
+      Tiden er inde, seglet er brudt, og din første færd er nu åbenbaret.
+      Broderskabet kalder dig mod byens hjerte – og du skal komme uden tøven og uden forsinkelse.
+    </p>
+
+    <p class="highlight">
+      MØDESTED: Under uret på Københavns Hovedbanegård kl. 10:15  
+    </p>
+    <p>(ikke et sekund for sent)</p>
+
+    <div class="origin-block">
+      <p><strong>Kommer du fra Rødovre</strong></p>
+      <p>Tag bus 200S til Husum St.</p>
+      <p>Skift til toget mod København H og vær under uret 10:15.</p>
+    </div>
+
+    <div class="origin-block">
+      <p><strong>Kommer du fra Nørrebro</strong></p>
+      <p>Tag metro M3 fra Nuuks Plads til København H.</p>
+      <p>Mød under uret 10:15. Ingen forsinkelser.</p>
+    </div>
+
+    <div class="origin-block">
+      <p><strong>Kommer du fra Frederiksberg</strong></p>
+      <p>Gå til Axel Møllers Have og tag metro M3 mod København H.</p>
+      <p>Mød under uret 10:15.</p>
+    </div>
+
+    <div class="origin-block">
+      <p><strong>Kommer du fra Greve</strong></p>
+      <p>Rejs direkte til København H.</p>
+      <p>Mød under uret 10:15 som en sand broder.</p>
+    </div>
+
+    <div class="footer-line">
+      <p>
+        Når uret slår, og brødrene står samlet, fortsætter julemysteriet.<br>
+        Vær klar. Vær præcis. Vær bror.
+      </p>
+    </div>
+  </div>
+
+</body>
+</html>
