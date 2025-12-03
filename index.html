@@ -26,7 +26,7 @@
     body {
       min-height: 100vh;
       display: flex;
-      align-items: center;
+      align-items: flex-start;        /* vigtigt for scroll på mobil */
       justify-content: center;
       padding: 16px;
       background:
@@ -34,7 +34,8 @@
       color: var(--ink);
       font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
       position: relative;
-      overflow: hidden;
+      overflow-x: hidden;             /* sne holdes inde */
+      overflow-y: auto;               /* tillad scroll lodret */
     }
 
     /* Sne-lag */
@@ -77,6 +78,7 @@
       z-index: 1;
       max-width: 750px;
       width: 100%;
+      margin: 32px auto 40px;
     }
 
     .scroll {
@@ -142,13 +144,14 @@
       font-size: 1.1rem;
       margin-bottom: 4px;
       color: #3b2a19;
+      text-align: center;
     }
 
     p {
       font-size: 1.02rem;
       line-height: 1.5;
       margin-bottom: 8px;
-      text-align: center;
+      text-align: center; /* alt tekst centreret */
     }
 
     p + p {
@@ -205,6 +208,7 @@
       font-weight: 600;
       margin-bottom: 4px;
       color: #3b2a19;
+      text-align: center;
     }
 
     .footer-line {
@@ -244,12 +248,9 @@
       transform: rotate(6deg);
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 600px) {
       .scroll {
-        padding: 22px 18px 20px;
-      }
-      .seal {
-        right: 12px;
+        padding: 24px 16px 20px;
       }
     }
   </style>
@@ -287,84 +288,86 @@
         </div>
       </div>
 
-      <!-- ÅBNET VISNING -->
-      <div id="unlocked" class="hidden">
-        <h1>FØRSTE FÆRD</h1>
-        <div class="subtitle">Som broderskabet foreskriver</div>
-
-        <div class="section">
-          <p>
-            Tiden er inde, seglet er brudt, og din første færd er nu åbenbaret.
-            Broderskabet kalder dig mod byens hjerte – og du skal komme uden tøven og uden forsinkelse.
-          </p>
-        </div>
-
-        <div class="section">
-          <p class="section-title">Mødetid og sted for alle brødre</p>
-          <p>
-            Du skal være under uret på <span class="highlight">Københavns Hovedbanegård</span> kl. <span class="highlight">10:15</span> – ikke et sekund for sent, ingen forsinkelser tolereres.
-          </p>
-          <p class="muted">
-            Din vej dertil er som følger:
-          </p>
-
-          <div class="origin-block">
-            <p class="origin-name">Kommer du fra Rødovre</p>
-            <p>
-              Kommer du fra <strong>Rødovre</strong>, skal du tage <strong>bus 200S</strong> til <strong>Husum St.</strong>
-            </p>
-            <p>
-              Herfra tager du toget mod <strong>København H (Hovedbanegården)</strong> og møder ind <strong>under uret kl. 10:15</strong> – ikke et sekund for sent.
-            </p>
-          </div>
-
-          <div class="origin-block">
-            <p class="origin-name">Kommer du fra Nørrebro</p>
-            <p>
-              Kommer du fra <strong>Nørrebro</strong>, skal du tage <strong>metro M3</strong> fra <strong>Nuuks Plads</strong> til <strong>København H (Hovedbanegården)</strong>.
-            </p>
-            <p>
-              Du skal stå <strong>under uret kl. 10:15</strong> – ingen forsinkelser.
-            </p>
-          </div>
-
-          <div class="origin-block">
-            <p class="origin-name">Kommer du fra Frederiksberg</p>
-            <p>
-              Kommer du fra <strong>Frederiksberg</strong>, skal du gå til <strong>metrostationen Axel Møllers Have</strong> og tage <strong>M3</strong> mod <strong>København H (Hovedbanegården)</strong>.
-            </p>
-            <p>
-              Her skal du ligeledes stå <strong>under uret kl. 10:15</strong> – uden forsinkelse.
-            </p>
-          </div>
-
-          <div class="origin-block">
-            <p class="origin-name">Kommer du fra Greve</p>
-            <p>
-              Kommer du fra <strong>Greve</strong>, skal du rejse direkte til <strong>København H (Hovedbanegården)</strong> og møde ind <strong>under uret kl. 10:15</strong> – i rette tid, som en sand broder.
-            </p>
-          </div>
-        </div>
-
-        <div class="footer-line">
-          <p>
-            Når uret slår, og brødrene står samlet, fortsætter julemysteriet.<br/>
-            Vær klar. Vær præcis. Vær bror.
-          </p>
-        </div>
-      </div>
+      <!-- ÅBNET VISNING – BLIVER FYLDT VIA JS -->
+      <div id="unlocked" class="hidden"></div>
     </div>
   </div>
 
   <script>
     // ====== Tidslås - sæt tidspunkt HER ======
-    // Format: ÅÅÅÅ-MM-DDTtt:mm:ss
     // Din tid: 6. december 2025 kl. 08:00 lokal tid
     const unlockTime = new Date("2025-12-06T08:00:00");
 
     const lockedEl = document.getElementById("locked");
     const unlockedEl = document.getElementById("unlocked");
     const countdownEl = document.getElementById("countdown");
+
+    // Selve indholdet til den "åbnede" side – nu kun i JS
+    const unlockedHTML = `
+<h1>FØRSTE FÆRD</h1>
+<div class="subtitle">Som broderskabet foreskriver</div>
+
+<div class="section">
+  <p>
+    Tiden er inde, seglet er brudt, og din første færd er nu åbenbaret.
+    Broderskabet kalder dig mod byens hjerte – og du skal komme uden tøven og uden forsinkelse.
+  </p>
+</div>
+
+<div class="section">
+  <p class="section-title">Mødetid og sted for alle brødre</p>
+  <p>
+    Du skal være under uret på <span class="highlight">Københavns Hovedbanegård</span> kl. <span class="highlight">10:15</span> – ikke et sekund for sent, ingen forsinkelser tolereres.
+  </p>
+  <p class="muted">
+    Din vej dertil er som følger:
+  </p>
+
+  <div class="origin-block">
+    <p class="origin-name">Kommer du fra Rødovre</p>
+    <p>
+      Kommer du fra <strong>Rødovre</strong>, skal du tage <strong>bus 200S</strong> til <strong>Husum St.</strong>
+    </p>
+    <p>
+      Herfra tager du toget mod <strong>København H (Hovedbanegården)</strong> og møder ind <strong>under uret kl. 10:15</strong> – ikke et sekund for sent.
+    </p>
+  </div>
+
+  <div class="origin-block">
+    <p class="origin-name">Kommer du fra Nørrebro</p>
+    <p>
+      Kommer du fra <strong>Nørrebro</strong>, skal du tage <strong>metro M3</strong> fra <strong>Nuuks Plads</strong> til <strong>København H (Hovedbanegården)</strong>.
+    </p>
+    <p>
+      Du skal stå <strong>under uret kl. 10:15</strong> – ingen forsinkelser.
+    </p>
+  </div>
+
+  <div class="origin-block">
+    <p class="origin-name">Kommer du fra Frederiksberg</p>
+    <p>
+      Kommer du fra <strong>Frederiksberg</strong>, skal du gå til <strong>metrostationen Axel Møllers Have</strong> og tage <strong>M3</strong> mod <strong>København H (Hovedbanegården)</strong>.
+    </p>
+    <p>
+      Her skal du ligeledes stå <strong>under uret kl. 10:15</strong> – uden forsinkelse.
+    </p>
+  </div>
+
+  <div class="origin-block">
+    <p class="origin-name">Kommer du fra Greve</p>
+    <p>
+      Kommer du fra <strong>Greve</strong>, skal du rejse direkte til <strong>København H (Hovedbanegården)</strong> og møde ind <strong>under uret kl. 10:15</strong> – i rette tid, som en sand broder.
+    </p>
+  </div>
+</div>
+
+<div class="footer-line">
+  <p>
+    Når uret slår, og brødrene står samlet, fortsætter julemysteriet.<br/>
+    Vær klar. Vær præcis. Vær bror.
+  </p>
+</div>
+    `.trim();
 
     function formatTimeLeft(ms) {
       if (ms <= 0) return "0 sekunder";
@@ -390,6 +393,9 @@
 
       if (diff <= 0) {
         // Lås op
+        if (!unlockedEl.innerHTML) {
+          unlockedEl.innerHTML = unlockedHTML;
+        }
         lockedEl.classList.add("hidden");
         unlockedEl.classList.remove("hidden");
       } else {
