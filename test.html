@@ -11,14 +11,15 @@
     body {
       min-height: 100vh;
       display: flex;
-      align-items: center;
+      align-items: flex-start; /* vigtig: scroll skal virke */
       justify-content: center;
       padding: 16px;
       background: radial-gradient(circle at top, #1f2937 0, #020617 55%, #000 100%);
       color: #261b0f;
       font-family: "Cormorant Garamond", serif;
       position: relative;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto; /* FIX: scroll på mobil */
     }
 
     .scroll {
@@ -27,6 +28,8 @@
       padding: 30px 24px 26px;
       max-width: 750px;
       width: 100%;
+      margin-top: 30px;
+      margin-bottom: 30px;
       box-shadow:
         0 25px 60px rgba(0, 0, 0, 0.75),
         0 0 0 1px rgba(0, 0, 0, 0.3),
@@ -39,8 +42,9 @@
       font-size: 2.2rem;
       text-align: center;
       letter-spacing: 0.05em;
-      text-shadow: 0 0 4px rgba(255, 255, 255, 0.6),
-                   0 0 10px rgba(0, 0, 0, 0.5);
+      text-shadow:
+        0 0 4px rgba(255, 255, 255, 0.6),
+        0 0 10px rgba(0, 0, 0, 0.5);
       margin-bottom: 5px;
     }
 
@@ -96,7 +100,7 @@
     <div class="origin-block">
       <p><strong>Kommer du fra Rødovre</strong></p>
       <p>Tag bus 200S til Husum St.</p>
-      <p>Skift til toget mod København H og vær under uret 10:15.</p>
+      <p>Skift til toget mod København H — vær under uret 10:15.</p>
     </div>
 
     <div class="origin-block">
